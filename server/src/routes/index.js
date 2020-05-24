@@ -5,12 +5,12 @@ router.get('/portfolio/:userID', controllers.getPortfolio);
 
 router.get('/transactions/:userID', controllers.getTransactions);
 
-router.post('/buy/:userID');
+router.post('/purchase/:userID', controllers.buyStock);
 
-router.post('/sell/:userID');
+router.post('/sale/:userID', controllers.sellStock);
 
-router.post('/auth/register');
+router.post('/auth/register', controllers.register);
 
-router.post('/auth/login');
+router.post('/auth/login', controllers.login);
 
 module.exports = router;
