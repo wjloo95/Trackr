@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import {
   NavBar,
@@ -17,7 +17,7 @@ export const App = () => {
   const { currentUser, isAuthenticated } = useTokenCheck();
 
   return (
-    <Router>
+    <>
       <NavBar isAuthenticated={isAuthenticated} />
       <Switch>
         <Route exact path="/">
@@ -39,6 +39,6 @@ export const App = () => {
           <NotFound />
         </Route>
       </Switch>
-    </Router>
+    </>
   );
 };

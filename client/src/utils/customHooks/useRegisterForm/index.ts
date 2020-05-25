@@ -17,15 +17,17 @@ export const useRegisterForm = () => {
     event.preventDefault();
 
     // Create a new account for the user
-    await register(formInputs);
+    const registeredUser = await register(formInputs);
+
+    if (registeredUser.status === 400) {
+      throw new Error('Email in Use');
+    }
 
     // Once created, sign that user in
     const loggedInUser = await login({
       email: formInputs.email,
       password: formInputs.password,
     });
-
-    console.log(loggedInUser);
 
     if (loggedInUser) {
       history.push('/');

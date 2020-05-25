@@ -113,9 +113,6 @@ module.exports = {
       name,
       email,
       password: hashedPassword,
-      cash: 5000,
-      transactions: [],
-      portfolio: {},
     });
   },
   login: async ({ email, password }) => {
