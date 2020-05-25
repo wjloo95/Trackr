@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import jwtDecode from 'jwt-decode';
 
-import { UserType } from '../../types';
+import { UserType, TokenType } from '../../types';
 import { logout, setAuthorizationToken } from '../../helpers/auth';
 import { useLocation } from 'react-router-dom';
 
@@ -12,7 +12,9 @@ export const useTokenCheck = () => {
   useEffect(() => {
     if (localStorage.jwtToken) {
       const currentTime = new Date().getTime() / 1000;
-      const token: any = jwtDecode(localStorage.jwtToken);
+      const token: TokenType = jwtDecode(localStorage.jwtToken);
+
+      const user = { id: token.id, name: token.name, cash: token.cash };
 
       // Check if token has expired
       if (currentTime > token.exp) {
@@ -21,11 +23,10 @@ export const useTokenCheck = () => {
         setIsAuthenticated(false);
       } else {
         setAuthorizationToken(localStorage.jwtToken);
-        setCurrentUser(token);
+        setCurrentUser(user);
         setIsAuthenticated(true);
-        // dispatch(set_current_user(token.user));
       }
     }
   }, [location]);
-  return { currentUser, isAuthenticated };
+  return { currentUser, setCurrentUser, isAuthenticated, setIsAuthenticated };
 };

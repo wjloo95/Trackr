@@ -14,11 +14,20 @@ import { useTokenCheck } from '../../utils/customHooks/useTokenCheck';
 
 export const App = () => {
   // Custom Hook to check if user is logged in and pass along that user information
-  const { currentUser, isAuthenticated } = useTokenCheck();
+  const {
+    currentUser,
+    setCurrentUser,
+    isAuthenticated,
+    setIsAuthenticated,
+  } = useTokenCheck();
 
   return (
     <>
-      <NavBar isAuthenticated={isAuthenticated} />
+      <NavBar
+        isAuthenticated={isAuthenticated}
+        setCurrentUser={setCurrentUser}
+        setIsAuthenticated={setIsAuthenticated}
+      />
       <Switch>
         <Route exact path="/">
           <Home isAuthenticated={isAuthenticated} />

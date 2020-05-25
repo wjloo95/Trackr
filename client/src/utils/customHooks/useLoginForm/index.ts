@@ -17,8 +17,6 @@ export const useLoginForm = () => {
 
     const loggedInUser = await login(formInputs);
 
-    console.log(loggedInUser);
-
     if (loggedInUser) {
       history.push('/');
     } else {

@@ -1,17 +1,31 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { logout } from '../../utils/helpers/auth';
+import { UserType } from '../../utils/types';
 
 type NavProps = {
   isAuthenticated: boolean;
+  setCurrentUser: (input: UserType | null) => void;
+  setIsAuthenticated: (input: boolean) => void;
 };
 
-export const NavBar = ({ isAuthenticated }: NavProps) => {
+export const NavBar = ({
+  isAuthenticated,
+  setCurrentUser,
+  setIsAuthenticated,
+}: NavProps) => {
+  const history = useHistory();
+  const handleLogout = () => {
+    logout();
+    setCurrentUser(null);
+    setIsAuthenticated(false);
+    history.push('/');
+  };
   const loggedInNav = (
     <>
       <Link to="/portfolio">Portfolio</Link>
       <Link to="/transactions">Transactions</Link>
-      <button onClick={logout}>Log Out</button>
+      <button onClick={handleLogout}>Log Out</button>
     </>
   );
 
