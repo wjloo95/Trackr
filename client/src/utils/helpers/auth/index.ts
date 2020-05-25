@@ -11,7 +11,10 @@ export function setAuthorizationToken(token: string) {
 }
 
 export function register(inputs: RegisterFormType) {
-  return axios.post('/auth/register', inputs);
+  return axios.post(
+    `${process.env.REACT_APP_PUBLIC_URL}/auth/register`,
+    inputs
+  );
 }
 
 export function logout() {
@@ -21,11 +24,13 @@ export function logout() {
 }
 
 export function login(data: LoginFormType) {
-  return axios.post('/auth/login', data).then((res) => {
-    const token = res.data.token;
+  return axios
+    .post(`${process.env.REACT_APP_PUBLIC_URL}/auth/login`, data)
+    .then((res) => {
+      const token = res.data.token;
 
-    localStorage.setItem('jwtToken', token);
-    setAuthorizationToken(token);
-    return jwtDecode(token);
-  });
+      localStorage.setItem('jwtToken', token);
+      setAuthorizationToken(token);
+      return jwtDecode(token);
+    });
 }
