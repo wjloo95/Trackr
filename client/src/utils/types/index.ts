@@ -22,3 +22,17 @@ export type TokenType = {
   iat: number;
   exp: number;
 };
+
+enum TransactionEnum {
+  purchase = 'purchase',
+  sale = 'sale',
+}
+
+export type TransactionType = {
+  _id: string;
+  date: string;
+  type: TransactionEnum;
+  symbol: string;
+  shares: number;
+  price: number;
+};
