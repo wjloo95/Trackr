@@ -1,13 +1,29 @@
 const router = require('express').Router();
 const controllers = require('../controllers');
 
-router.get('/portfolio/:userID', controllers.getPortfolio);
+router.get(
+  '/portfolio/:userID',
+  controllers.authenticateUser,
+  controllers.getPortfolio
+);
 
-router.get('/transactions/:userID', controllers.getTransactions);
+router.get(
+  '/transactions/:userID',
+  controllers.authenticateUser,
+  controllers.getTransactions
+);
 
-router.post('/purchase/:userID', controllers.buyStock);
+router.post(
+  '/purchase/:userID',
+  controllers.authenticateUser,
+  controllers.buyStock
+);
 
-router.post('/sale/:userID', controllers.sellStock);
+router.post(
+  '/sale/:userID',
+  controllers.authenticateUser,
+  controllers.sellStock
+);
 
 router.post('/auth/register', controllers.register);
 

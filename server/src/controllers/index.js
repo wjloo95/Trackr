@@ -153,4 +153,30 @@ module.exports = {
       }
     }
   },
+  authenticateUser: async (req, res, next) => {
+    try {
+      // Pull out authorization token from incoming request
+      const headerToken = req.headers.authorization.split(' ')[1];
+
+      // confirm that this is the correct token
+      const secret = process.env.SECRET;
+      const token = jwt.verify(headerToken, secret);
+
+      // confirm that the path userID is equal to the token's userID
+      const urlUserID = req.params.userID;
+      const tokenID = jwt.decode(headerToken).id;
+
+      if (urlUserID !== tokenID) {
+        throw new Error('Wrong User');
+      }
+
+      // if it passes all these checks, the user is authorized and passed on
+      return next();
+    } catch (error) {
+      if (error.message === 'Wrong User') {
+        return res.status(401).json({ message: 'Wrong User' });
+      }
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
+  },
 };
