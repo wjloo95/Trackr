@@ -36,3 +36,14 @@ export type TransactionType = {
   shares: number;
   price: number;
 };
+
+export type TransactionFormType = {
+  symbol: string;
+  type: string;
+  shares: string;
+};
+
+export type StockPriceType = {
+  name: string;
+  price: number;
+};

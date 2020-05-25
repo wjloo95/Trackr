@@ -39,7 +39,11 @@ export const App = () => {
           <Register />
         </Route>
         <Route exact path="/portfolio">
-          {isAuthenticated ? <Portfolio /> : <Login />}
+          {isAuthenticated ? (
+            <Portfolio currentUser={currentUser} />
+          ) : (
+            <Login />
+          )}
         </Route>
         <Route exact path="/transactions">
           {isAuthenticated ? (

@@ -2,8 +2,6 @@ import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import { LoginFormType, RegisterFormType } from '../../types';
 
-axios.defaults.baseURL = process.env.REACT_APP_PUBLIC_URL;
-
 export function setAuthorizationToken(token: string) {
   if (token.length) {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
