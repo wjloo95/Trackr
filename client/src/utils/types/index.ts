@@ -1,7 +1,6 @@
 export type UserType = {
   id: string;
   name: string;
-  cash: number;
 };
 
 export type LoginFormType = {
@@ -40,7 +39,7 @@ export type TransactionType = {
 export type TransactionFormType = {
   symbol: string;
   type: string;
-  shares: string;
+  shares: number;
 };
 
 export type StockPriceType = {

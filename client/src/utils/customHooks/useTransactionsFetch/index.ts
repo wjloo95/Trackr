@@ -18,6 +18,6 @@ export const useTransactionsFetch = (userID: string | undefined) => {
     if (userID) {
       fetchData();
     }
-  }, []);
+  }, [userID]);
   return response;
 };

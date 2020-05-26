@@ -1,15 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import {
-  NavBar,
-  Home,
-  Login,
-  Register,
-  Portfolio,
-  Transactions,
-  NotFound,
-} from '../';
+import { NavBar, Home, Login, Register, Portfolio, Transactions } from '../';
 import { useTokenCheck } from '../../utils/customHooks/useTokenCheck';
 
 export const App = () => {
@@ -29,9 +21,6 @@ export const App = () => {
         setIsAuthenticated={setIsAuthenticated}
       />
       <Switch>
-        <Route exact path="/">
-          <Home isAuthenticated={isAuthenticated} />
-        </Route>
         <Route exact path="/login">
           <Login />
         </Route>
@@ -53,7 +42,7 @@ export const App = () => {
           )}
         </Route>
         <Route>
-          <NotFound />
+          <Home isAuthenticated={isAuthenticated} />
         </Route>
       </Switch>
     </>

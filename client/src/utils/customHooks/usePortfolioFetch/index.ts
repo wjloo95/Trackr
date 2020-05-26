@@ -27,8 +27,6 @@ export const usePortfolioFetch = (userID: string | null) => {
         `https://sandbox.iexapis.com/stable/stock/market/batch?types=quote&symbols=${symbolString}&token=Tsk_943ee8f6637548f3828fcaef19d09bfd`
       ).then((res) => res.json());
 
-      console.log(stockResults);
-
       // Clean IEX data to only return what we need
       const cleanedStockResults = Object.keys(stockResults).map((symbol) => ({
         symbol,
@@ -42,6 +40,6 @@ export const usePortfolioFetch = (userID: string | null) => {
       setResponse(cleanedStockResults);
     };
     fetchData();
-  }, []);
+  }, [userID]);
   return response;
 };

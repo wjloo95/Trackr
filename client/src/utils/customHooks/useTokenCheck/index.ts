@@ -14,7 +14,7 @@ export const useTokenCheck = () => {
       const currentTime = new Date().getTime() / 1000;
       const token: TokenType = jwtDecode(localStorage.jwtToken);
 
-      const user = { id: token.id, name: token.name, cash: token.cash };
+      const user = { id: token.id, name: token.name };
 
       // Check if token has expired
       if (currentTime > token.exp) {

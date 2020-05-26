@@ -2,15 +2,7 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { MemoryRouter } from 'react-router';
 
-import {
-  App,
-  NotFound,
-  Home,
-  Login,
-  Register,
-  Portfolio,
-  Transactions,
-} from '..';
+import { App, Home, Login, Register, Portfolio, Transactions } from '..';
 
 const mockReactRouterDom = require('react-router-dom');
 
@@ -68,15 +60,5 @@ describe('App Routes', () => {
     );
 
     expect(wrapper.find(Transactions)).toHaveLength(1);
-  });
-
-  test('Invalid path should route to NotFound', () => {
-    const wrapper = mount(
-      <MemoryRouter initialEntries={['/random']}>
-        <App />
-      </MemoryRouter>
-    );
-
-    expect(wrapper.find(NotFound)).toHaveLength(1);
   });
 });

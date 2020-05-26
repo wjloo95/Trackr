@@ -3,16 +3,20 @@ import { useTransactionForm } from '../../../utils/customHooks/useTransactionFor
 
 type TransactionFormProps = {
   setRequestMade: (input: boolean) => void;
+  userID: string | null;
 };
 
-export const TransactionForm = ({ setRequestMade }: TransactionFormProps) => {
+export const TransactionForm = ({
+  setRequestMade,
+  userID,
+}: TransactionFormProps) => {
   const {
     formInputs,
     priceData,
     checkIsValidSymbol,
     handleSubmit,
     handleInputChange,
-  } = useTransactionForm(setRequestMade);
+  } = useTransactionForm(setRequestMade, userID);
   return (
     <form onSubmit={handleSubmit}>
       <div>
@@ -32,15 +36,25 @@ export const TransactionForm = ({ setRequestMade }: TransactionFormProps) => {
             <>
               <div>{priceData.name}</div>
               <div>{priceData.price}</div>
-              <label>Quantity</label>
+              <label>Transaction Type</label>
+              <select
+                name="type"
+                required
+                onChange={handleInputChange}
+                value={formInputs.type}
+              >
+                <option value="purchase">Buy</option>
+                <option value="sale">Sell</option>
+              </select>
+              <label>Shares</label>
               <input
                 type="number"
-                name="quantity"
+                name="shares"
                 required
                 onChange={handleInputChange}
                 value={formInputs.shares}
               />
-              <button type="submit">Buy</button>
+              <button type="submit">Complete Transaction</button>
             </>
           )
         ) : null}

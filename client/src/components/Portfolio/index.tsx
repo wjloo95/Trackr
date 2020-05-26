@@ -9,12 +9,17 @@ type PortfolioProps = {
 
 export const Portfolio = ({ currentUser }: PortfolioProps) => {
   const [requestMade, setRequestMade] = useState(false);
-  return (
+  return requestMade ? (
+    <div>PROCESSING YOUR PURCHASE</div>
+  ) : (
     <div>
       Portfolio
       <div>
-        <PortfolioList />
-        <TransactionForm setRequestMade={setRequestMade} />
+        <PortfolioList userID={currentUser ? currentUser.id : null} />
+        <TransactionForm
+          setRequestMade={setRequestMade}
+          userID={currentUser ? currentUser.id : null}
+        />
       </div>
     </div>
   );

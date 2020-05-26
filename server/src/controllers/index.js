@@ -130,9 +130,9 @@ module.exports = {
       const loggedInUser = await model.login(loginCredentials);
 
       // Create JSON Web Token to pass along with response
-      const { _id, name, cash } = loggedInUser;
+      const { _id, name } = loggedInUser;
       const secret = process.env.SECRET;
-      const token = jwt.sign({ id: _id, name, cash }, secret, {
+      const token = jwt.sign({ id: _id, name }, secret, {
         expiresIn: '1h',
       });
 

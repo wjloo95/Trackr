@@ -263,6 +263,25 @@ describe('POST /sale', () => {
     expect(updatedPortfolio.body.portfolio).toMatchObject({ AAPL: 5 });
   });
 
+  test('remove stock from portfolio if all sold', async () => {
+    await request(app)
+      .post(`/sale/${authInfo.currentID}`)
+      .send({
+        date: '2020-01-01',
+        type: 'sale',
+        symbol: 'AAPL',
+        shares: 10,
+        price: 400,
+      })
+
+      .set('authorization', 'Bearer ' + authInfo.token);
+    const updatedPortfolio = await request(app)
+      .get(`/portfolio/${authInfo.currentID}`)
+
+      .set('authorization', 'Bearer ' + authInfo.token);
+    expect(updatedPortfolio.body.portfolio).toMatchObject({});
+  });
+
   test('update cash value to reflect sale', async () => {
     const updatedUser = await request(app)
       .post(`/sale/${authInfo.currentID}`)

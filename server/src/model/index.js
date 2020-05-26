@@ -88,6 +88,19 @@ module.exports = {
       throw new Error('Insufficient shares');
     }
 
+    // Remove stock if we sell all our shares
+    if (currentPorfolio.portfolio[symbol] === shares) {
+      return await User.findByIdAndUpdate(
+        userID,
+        {
+          $unset: {
+            [`portfolio.${symbol}`]: '',
+          },
+        },
+        { returnOriginal: false }
+      ).exec();
+    }
+
     return await User.findByIdAndUpdate(
       userID,
       {

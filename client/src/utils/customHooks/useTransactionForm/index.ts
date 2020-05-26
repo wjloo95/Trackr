@@ -3,12 +3,13 @@ import axios from 'axios';
 import { TransactionFormType, StockPriceType } from '../../types';
 
 export const useTransactionForm = (
-  setrequestMade: (input: boolean) => void
+  setrequestMade: (input: boolean) => void,
+  userID: string | null
 ) => {
   const [formInputs, setFormInputs] = useState<TransactionFormType>({
     symbol: '',
     type: '',
-    shares: '',
+    shares: 0,
   });
   const [priceData, setpriceData] = useState<StockPriceType>({
     name: '',
@@ -26,13 +27,16 @@ export const useTransactionForm = (
     const currentDate = new Date();
 
     axios
-      .post(`/${formInputs.type}/5ec603faf3b5ec3c943bd2dd`, {
-        date: currentDate,
-        type: formInputs.type,
-        symbol: formInputs.symbol.toUpperCase(),
-        shares: Number(formInputs.shares),
-        price: priceData.price,
-      })
+      .post(
+        `${process.env.REACT_APP_PUBLIC_URL}/${formInputs.type}/${userID}`,
+        {
+          date: currentDate,
+          type: formInputs.type,
+          symbol: formInputs.symbol.toUpperCase(),
+          shares: formInputs.shares,
+          price: priceData.price,
+        }
+      )
       .then(() => setrequestMade(false));
   };
 
@@ -56,7 +60,10 @@ export const useTransactionForm = (
     event.persist();
     setFormInputs((prevInputs) => ({
       ...prevInputs,
-      [event.target.name]: event.target.value,
+      [event.target.name]:
+        event.target.name === 'shares'
+          ? Number(event.target.value)
+          : event.target.value,
     }));
   };
 
