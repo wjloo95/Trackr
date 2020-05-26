@@ -4,7 +4,8 @@ import { PortfolioEntryType } from '../../types';
 
 export const usePortfolioFetch = (
   userID: string | null,
-  setCurrentBalance: (input: number) => void
+  setCurrentBalance: (input: number) => void,
+  setPortfolioValue: (input: number) => void
 ) => {
   const [response, setResponse] = useState<PortfolioEntryType[] | null>(null);
   useEffect(() => {
@@ -37,13 +38,24 @@ export const usePortfolioFetch = (
         `https://sandbox.iexapis.com/stable/stock/market/batch?types=quote&symbols=${symbolString}&token=Tsk_943ee8f6637548f3828fcaef19d09bfd`
       ).then((res) => res.json());
 
+      // Sum up the value of all the portfolio's stocks
+      const totalPortfolioValue = Object.keys(stockResults).reduce(
+        (acc, symbol) => {
+          const shares = currentPortfolio.data.portfolio[symbol];
+          const price = stockResults[symbol].quote.latestPrice;
+
+          return acc + shares * price;
+        },
+        0
+      );
+
+      setPortfolioValue(totalPortfolioValue);
+
       // Clean IEX data to only return what we need
       const cleanedStockResults = Object.keys(stockResults).map((symbol) => ({
         symbol,
-        name: stockResults[symbol].quote.companyName,
         latestPrice: stockResults[symbol].quote.latestPrice,
         change: stockResults[symbol].quote.change,
-        open: stockResults[symbol].quote.open,
         shares: currentPortfolio.data.portfolio[symbol],
       }));
 

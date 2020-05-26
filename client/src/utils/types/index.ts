@@ -49,9 +49,7 @@ export type StockPriceType = {
 
 export type PortfolioEntryType = {
   symbol: string;
-  name: string;
   latestPrice: number;
   change: number;
-  open: number;
   shares: number;
 };

@@ -1,17 +1,25 @@
 import React from 'react';
+
+import { FiTrendingUp, FiTrendingDown, FiBarChart2 } from 'react-icons/fi';
 import { usePortfolioFetch } from '../../../utils/customHooks/usePortfolioFetch';
 import { PortfolioEntryType } from '../../../utils/types';
 
 type PortfolioListProps = {
   userID: string | null;
   setCurrentBalance: (input: number) => void;
+  setPortfolioValue: (input: number) => void;
 };
 
 export const PortfolioList = ({
   userID,
   setCurrentBalance,
+  setPortfolioValue,
 }: PortfolioListProps) => {
-  const portfolio = usePortfolioFetch(userID, setCurrentBalance);
+  const portfolio = usePortfolioFetch(
+    userID,
+    setCurrentBalance,
+    setPortfolioValue
+  );
 
   const emptyPortfolioComponent = portfolio ? null : (
     <div>
@@ -22,37 +30,40 @@ export const PortfolioList = ({
   const portfolioListComponent = portfolio
     ? portfolio.map(
         (
-          {
-            symbol,
-            name,
-            latestPrice,
-            change,
-            open,
-            shares,
-          }: PortfolioEntryType,
+          { symbol, latestPrice, change, shares }: PortfolioEntryType,
           index: number
         ) => (
           <div
             key={index}
             style={{
-              display: 'flex',
-              flexDirection: 'column',
-              marginLeft: '20px',
-              color: change > 0 ? 'green' : 'red',
+              color:
+                change > 0
+                  ? 'forestgreen'
+                  : change === 0
+                  ? 'grey'
+                  : 'firebrick',
             }}
+            className="portfolio-element"
           >
-            <h1>
-              {symbol} | {name}
-            </h1>
-            <h4>{shares}</h4>
-            <h4>{latestPrice}</h4>
+            <p>
+              {change > 0 ? (
+                <FiTrendingUp />
+              ) : change < 0 ? (
+                <FiTrendingDown />
+              ) : (
+                <FiBarChart2 />
+              )}{' '}
+              {symbol}
+              <span> - {shares} shares</span>
+            </p>
+            <p>${latestPrice.toFixed(2)}/share</p>
           </div>
         )
       )
     : null;
 
   return (
-    <div>
+    <div className="portfolio-list">
       {emptyPortfolioComponent}
       {portfolioListComponent}
     </div>
