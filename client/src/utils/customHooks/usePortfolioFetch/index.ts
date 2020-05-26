@@ -2,7 +2,10 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { PortfolioEntryType } from '../../types';
 
-export const usePortfolioFetch = (userID: string | null) => {
+export const usePortfolioFetch = (
+  userID: string | null,
+  setCurrentBalance: (input: number) => void
+) => {
   const [response, setResponse] = useState<PortfolioEntryType[] | null>(null);
   useEffect(() => {
     const fetchData = async () => {
@@ -10,6 +13,13 @@ export const usePortfolioFetch = (userID: string | null) => {
       const currentPortfolio = await axios.get(
         `${process.env.REACT_APP_PUBLIC_URL}/portfolio/${userID}`
       );
+
+      // Retrieve this user's cash balance
+      const currentCash = await axios.get(
+        `${process.env.REACT_APP_PUBLIC_URL}/balance/${userID}`
+      );
+
+      setCurrentBalance(currentCash.data.cash);
 
       // Construct string from symbols to query IEX API
       const symbolsArr = Object.keys(currentPortfolio.data.portfolio);

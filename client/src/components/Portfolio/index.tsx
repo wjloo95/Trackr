@@ -9,16 +9,21 @@ type PortfolioProps = {
 
 export const Portfolio = ({ currentUser }: PortfolioProps) => {
   const [requestMade, setRequestMade] = useState(false);
+  const [currentBalance, setCurrentBalance] = useState(0);
   return requestMade ? (
     <div>PROCESSING YOUR PURCHASE</div>
   ) : (
     <div>
-      Portfolio
+      Portfolio | Current Cash Balance: {currentBalance}
       <div>
-        <PortfolioList userID={currentUser ? currentUser.id : null} />
+        <PortfolioList
+          userID={currentUser ? currentUser.id : null}
+          setCurrentBalance={setCurrentBalance}
+        />
         <TransactionForm
           setRequestMade={setRequestMade}
           userID={currentUser ? currentUser.id : null}
+          setCurrentBalance={setCurrentBalance}
         />
       </div>
     </div>

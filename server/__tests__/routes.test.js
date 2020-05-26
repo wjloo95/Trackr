@@ -51,6 +51,31 @@ afterAll(async () => {
   await mongoose.disconnect();
 });
 
+describe('GET /balance', () => {
+  test('executes get successfully', async () => {
+    const response = await request(app)
+      .get(`/balance/${authInfo.currentID}`)
+
+      .set('authorization', 'Bearer ' + authInfo.token);
+    expect(response.statusCode).toBe(200);
+  });
+  test('returns a users balance', async () => {
+    const response = await request(app)
+      .get(`/balance/${authInfo.currentID}`)
+
+      .set('authorization', 'Bearer ' + authInfo.token);
+    expect(response.body.cash).toBe(5000);
+  });
+});
+
+describe('GET /balance without auth', () => {
+  test('requires login', async () => {
+    const response = await request(app).get(`/balance/${authInfo.currentID}`);
+    expect(response.statusCode).toBe(401);
+    expect(response.body.message).toBe('Unauthorized');
+  });
+});
+
 describe('GET /portfolio', () => {
   test('executes get successfully', async () => {
     const response = await request(app)

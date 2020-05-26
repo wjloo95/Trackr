@@ -4,6 +4,7 @@ import { TransactionFormType, StockPriceType } from '../../types';
 
 export const useTransactionForm = (
   setrequestMade: (input: boolean) => void,
+  setCurrentBalance: (input: number) => void,
   userID: string | null
 ) => {
   const [formInputs, setFormInputs] = useState<TransactionFormType>({
@@ -37,7 +38,10 @@ export const useTransactionForm = (
           price: priceData.price,
         }
       )
-      .then(() => setrequestMade(false));
+      .then((res) => {
+        setCurrentBalance(res.data.cash);
+        setrequestMade(false);
+      });
   };
 
   const checkIsValidSymbol = async (event: any) => {

@@ -2,6 +2,12 @@ const router = require('express').Router();
 const controllers = require('../controllers');
 
 router.get(
+  '/balance/:userID',
+  controllers.authenticateUser,
+  controllers.getBalance
+);
+
+router.get(
   '/portfolio/:userID',
   controllers.authenticateUser,
   controllers.getPortfolio

@@ -3,12 +3,14 @@ import { useTransactionForm } from '../../../utils/customHooks/useTransactionFor
 
 type TransactionFormProps = {
   setRequestMade: (input: boolean) => void;
+  setCurrentBalance: (input: number) => void;
   userID: string | null;
 };
 
 export const TransactionForm = ({
   setRequestMade,
   userID,
+  setCurrentBalance,
 }: TransactionFormProps) => {
   const {
     formInputs,
@@ -16,7 +18,7 @@ export const TransactionForm = ({
     checkIsValidSymbol,
     handleSubmit,
     handleInputChange,
-  } = useTransactionForm(setRequestMade, userID);
+  } = useTransactionForm(setRequestMade, setCurrentBalance, userID);
   return (
     <form onSubmit={handleSubmit}>
       <div>

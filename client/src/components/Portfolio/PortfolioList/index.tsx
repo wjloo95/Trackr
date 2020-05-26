@@ -4,10 +4,14 @@ import { PortfolioEntryType } from '../../../utils/types';
 
 type PortfolioListProps = {
   userID: string | null;
+  setCurrentBalance: (input: number) => void;
 };
 
-export const PortfolioList = ({ userID }: PortfolioListProps) => {
-  const portfolio = usePortfolioFetch(userID);
+export const PortfolioList = ({
+  userID,
+  setCurrentBalance,
+}: PortfolioListProps) => {
+  const portfolio = usePortfolioFetch(userID, setCurrentBalance);
 
   const emptyPortfolioComponent = portfolio ? null : (
     <div>

@@ -3,6 +3,18 @@ const bcrypt = require('bcrypt');
 const User = require('../db/models');
 
 module.exports = {
+  getBalance: async (userID) => {
+    const returnedBalance = await User.findById(userID, {
+      _id: 0,
+      cash: 1,
+    }).exec();
+
+    if (!returnedBalance) {
+      throw new Error('Invalid User ID');
+    }
+
+    return returnedBalance;
+  },
   getPortfolio: async (userID) => {
     const returnedPortfolio = await User.findById(userID, {
       _id: 0,

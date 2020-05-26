@@ -2,6 +2,25 @@ const jwt = require('jsonwebtoken');
 const model = require('../model');
 
 module.exports = {
+  getBalance: async (req, res) => {
+    try {
+      const userID = req.params.userID;
+      const returnedBalance = await model.getBalance(userID);
+
+      res.status(200).send(returnedBalance);
+    } catch (error) {
+      if (error.message === 'Invalid User ID') {
+        res.status(400).json({
+          message:
+            'This user was not associated with an account in our system. Please try again with a different user.',
+        });
+      } else {
+        res.status(500).json({
+          message: 'The server encountered an error. Please try again later.',
+        });
+      }
+    }
+  },
   getPortfolio: async (req, res) => {
     try {
       const userID = req.params.userID;
