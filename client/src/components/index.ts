@@ -5,3 +5,5 @@ export * from './Login';
 export * from './Register';
 export * from './Portfolio';
 export * from './Transactions';
+export * from './PrivateRoute';
+export * from './PublicRoute';

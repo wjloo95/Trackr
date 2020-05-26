@@ -1,7 +1,16 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import { NavBar, Home, Login, Register, Portfolio, Transactions } from '../';
+import {
+  NavBar,
+  Home,
+  Login,
+  Register,
+  Portfolio,
+  Transactions,
+  PublicRoute,
+  PrivateRoute,
+} from '../';
 import { useTokenCheck } from '../../utils/customHooks/useTokenCheck';
 
 export const App = () => {
@@ -22,26 +31,32 @@ export const App = () => {
       />
       <div className="app-body">
         <Switch>
-          <Route exact path="/login">
-            <Login />
-          </Route>
-          <Route exact path="/register">
-            <Register />
-          </Route>
-          <Route exact path="/portfolio">
-            {isAuthenticated ? (
-              <Portfolio currentUser={currentUser} />
-            ) : (
-              <Login />
-            )}
-          </Route>
-          <Route exact path="/transactions">
-            {isAuthenticated ? (
-              <Transactions currentUser={currentUser} />
-            ) : (
-              <Login />
-            )}
-          </Route>
+          <PublicRoute
+            exact
+            path="/login"
+            component={Login}
+            isAuthenticated={isAuthenticated}
+          />
+          <PublicRoute
+            exact
+            path="/register"
+            component={Register}
+            isAuthenticated={isAuthenticated}
+          />
+          <PrivateRoute
+            exact
+            path="/portfolio"
+            component={Portfolio}
+            isAuthenticated={isAuthenticated}
+            currentUser={currentUser}
+          />
+          <PrivateRoute
+            exact
+            path="/transactions"
+            component={Transactions}
+            isAuthenticated={isAuthenticated}
+            currentUser={currentUser}
+          />
           <Route>
             <Home isAuthenticated={isAuthenticated} />
           </Route>

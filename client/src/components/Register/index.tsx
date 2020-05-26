@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 export const Register = () => {
   const { formInputs, handleSubmit, handleInputChange } = useRegisterForm();
+
   return (
     <div className="card-container form-container">
       <h1>Create An Account</h1>
