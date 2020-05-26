@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { StockPriceType } from '../../types';
+import { fetchSingleIEX } from '../../helpers/api';
 
 export const useCheckSymbol = () => {
   const [symbolFormInputs, setFormInputs] = useState({
@@ -14,9 +15,8 @@ export const useCheckSymbol = () => {
   const handleSymbolSubmit = async (event: any) => {
     try {
       event.preventDefault();
-      const stockResults = await fetch(
-        `https://sandbox.iexapis.com/stable/stock/${symbolFormInputs.symbol}/quote?token=Tsk_943ee8f6637548f3828fcaef19d09bfd`
-      ).then((res) => res.json());
+
+      const stockResults = await fetchSingleIEX(symbolFormInputs.symbol);
 
       const { companyName, latestPrice } = stockResults;
 

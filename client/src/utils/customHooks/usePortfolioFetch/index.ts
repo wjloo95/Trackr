@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { PortfolioEntryType } from '../../types';
 import { displayError } from '../../helpers/alert';
+import { fetchBatchIEX } from '../../helpers/api';
 
 const constructIEXQuery = async (userID: string | null) => {
   // Retrieve this user's portfolio
@@ -23,9 +24,7 @@ const constructResults = async (
   currentPortfolio: any
 ) => {
   // Return requisite data for each portfolio stock
-  const stockResults = await fetch(
-    `https://sandbox.iexapis.com/stable/stock/market/batch?types=quote&symbols=${symbolString}&token=Tsk_943ee8f6637548f3828fcaef19d09bfd`
-  ).then((res) => res.json());
+  const stockResults = await fetchBatchIEX(symbolString);
 
   // Sum up the value of all the portfolio's stocks
   const totalPortfolioValue = Object.keys(stockResults).reduce(
