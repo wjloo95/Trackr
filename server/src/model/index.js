@@ -124,6 +124,7 @@ module.exports = {
     ).exec();
   },
   register: async ({ name, email, password }) => {
+    email = email.toLowerCase();
     const isExistingUser = await User.findOne({ email }).exec();
 
     if (isExistingUser) {
@@ -141,6 +142,7 @@ module.exports = {
     });
   },
   login: async ({ email, password }) => {
+    email = email.toLowerCase();
     const currentUser = await User.findOne({ email }).exec();
 
     if (!currentUser) {

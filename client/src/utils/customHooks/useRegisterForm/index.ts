@@ -19,7 +19,7 @@ export const useRegisterForm = () => {
       event.preventDefault();
 
       // Create a new account for the user
-      const registeredUser = await register(formInputs);
+      await register(formInputs);
 
       // Once created, sign that user in
       const loggedInUser = await login({
