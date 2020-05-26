@@ -1,0 +1,148 @@
+.portfolio-container {
+  width: 100%;
+  height: 100%;
+}
+
+.portfolio-components {
+  display: flex;
+  width: 100%;
+  height: 70vh;
+  justify-content: space-between;
+  padding: 1em 1.5em;
+  border-radius: 15px;
+}
+
+.portfolio-list {
+  flex: 1;
+  min-width: 0;
+  overflow-y: auto;
+  padding-right: 2em;
+  border-right: 3px solid black;
+}
+
+.portfolio-element {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.6em;
+  border-bottom: 1px solid black;
+}
+
+.portfolio-element span {
+  color: black;
+}
+
+.transaction-form-outer-container {
+  padding: 0 2em;
+  flex: 1;
+}
+
+.transaction-form-outer-container h2 {
+  margin-bottom: 0.5em;
+}
+
+.transaction-form-outer-container label {
+  font-size: 1.5em;
+}
+
+.transaction-form-outer-container input {
+  background: none;
+  margin-bottom: 1em;
+  margin-left: 0.5em;
+  line-height: 2em;
+  letter-spacing: 0.02em;
+  font-size: 1em;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.65);
+  border-radius: 5px;
+  padding: 0.1em 0.5em;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+.transaction-form-outer-container input:focus {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.transaction-form-inner-container {
+  width: 100%;
+  height: 55vh;
+  padding: 2em 1em;
+  background-color: var(--dark-font-secondary-color);
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.transaction-form-inner-container form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.transaction-button {
+  margin-top: 0.75em;
+  margin-bottom: 2.5em;
+  cursor: pointer;
+  background-color: var(--primary-color);
+  color: var(--light-font-color);
+  padding: 0.8em 1.4em;
+  border-radius: 15px;
+  font-size: 0.9em;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.25s ease-in;
+}
+
+.transaction-button:hover {
+  color: var(--light-font-color);
+  background: var(--primary-color);
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.4);
+  transform: translateY(-1px);
+}
+
+.symbol-information {
+  font-size: 2em;
+  margin-bottom: 1em;
+}
+
+.invalid {
+  color: firebrick;
+}
+
+.valid {
+  color: forestgreen;
+}
+
+.transaction-form-outer-container select {
+  width: 120px;
+  background: none;
+  margin-left: 0.5em;
+  margin-bottom: 0.5em;
+  line-height: 2em;
+  letter-spacing: 0.02em;
+  font-size: 1em;
+  padding: 0.1em 0.5em;
+  font-size: 1em;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.65);
+  border-radius: 5px;
+  cursor: pointer;
+  appearance: none;
+}
+
+.transaction-form-outer-container select:focus {
+  border: none;
+  outline: none;
+}
+
+/* Remove number arrows */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  cursor: pointer;
+}
+
+/* Firefox */
+input[type='number'] {
+  cursor: pointer;
+  padding-right: 0;
+}

@@ -3,7 +3,7 @@ import { Link, NavLink, useHistory } from 'react-router-dom';
 import { logout } from '../../utils/helpers/auth';
 import { UserType } from '../../utils/types';
 
-import './navbar.css';
+import '../../styles/navbar.css';
 
 type NavProps = {
   isAuthenticated: boolean;

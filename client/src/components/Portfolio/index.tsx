@@ -3,7 +3,7 @@ import { UserType } from '../../utils/types';
 import { PortfolioList } from './PortfolioList';
 import { TransactionForm } from './TransactionForm';
 
-import './portfolio.css';
+import '../../styles/portfolio.css';
 
 type PortfolioProps = {
   currentUser: UserType | null;
@@ -16,8 +16,8 @@ export const Portfolio = ({ currentUser }: PortfolioProps) => {
   return requestMade ? (
     <div>PROCESSING YOUR PURCHASE</div>
   ) : (
-    <>
-      <h1>Portfolio (${portfolioValue.toFixed(2)})</h1>
+    <div className="portfolio-container">
+      <div className="page-title">Portfolio (${portfolioValue.toFixed(2)})</div>
       <div className="portfolio-components">
         <PortfolioList
           userID={currentUser ? currentUser.id : null}
@@ -31,6 +31,6 @@ export const Portfolio = ({ currentUser }: PortfolioProps) => {
           setCurrentBalance={setCurrentBalance}
         />
       </div>
-    </>
+    </div>
   );
 };

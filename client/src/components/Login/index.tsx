@@ -7,7 +7,7 @@ export const Login = () => {
 
   return (
     <div className="card-container form-container">
-      <h1>Log Into Your Account</h1>
+      <h1 className="card-title">Log Into Your Account</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-element">
           <label>Email</label>

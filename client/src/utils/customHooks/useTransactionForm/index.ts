@@ -5,16 +5,12 @@ import { TransactionFormType, StockPriceType } from '../../types';
 export const useTransactionForm = (
   setrequestMade: (input: boolean) => void,
   setCurrentBalance: (input: number) => void,
-  userID: string | null
+  userID: string | null,
+  priceData: StockPriceType
 ) => {
   const [formInputs, setFormInputs] = useState<TransactionFormType>({
-    symbol: '',
-    type: '',
-    shares: 0,
-  });
-  const [priceData, setpriceData] = useState<StockPriceType>({
-    name: '',
-    price: 0,
+    type: 'purchase',
+    shares: 1,
   });
 
   const handleSubmit = async (event: any) => {
@@ -33,7 +29,7 @@ export const useTransactionForm = (
         {
           date: currentDate,
           type: formInputs.type,
-          symbol: formInputs.symbol.toUpperCase(),
+          symbol: priceData.symbol.toUpperCase(),
           shares: formInputs.shares,
           price: priceData.price,
         }
@@ -42,22 +38,6 @@ export const useTransactionForm = (
         setCurrentBalance(res.data.cash);
         setrequestMade(false);
       });
-  };
-
-  const checkIsValidSymbol = async (event: any) => {
-    event.preventDefault();
-
-    try {
-      const stockResults = await fetch(
-        `https://sandbox.iexapis.com/stable/stock/${formInputs.symbol}/quote?token=Tsk_943ee8f6637548f3828fcaef19d09bfd`
-      ).then((res) => res.json());
-
-      const { companyName, latestPrice } = stockResults;
-
-      setpriceData({ name: companyName, price: latestPrice });
-    } catch (error) {
-      setpriceData({ name: 'invalid', price: 0 });
-    }
   };
 
   const handleInputChange = (event: any) => {
@@ -72,10 +52,9 @@ export const useTransactionForm = (
   };
 
   return {
-    checkIsValidSymbol,
     handleSubmit,
     handleInputChange,
-    priceData,
+
     formInputs,
   };
 };

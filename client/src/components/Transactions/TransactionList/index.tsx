@@ -7,13 +7,15 @@ type TransactionListProps = {
 
 export const TransactionList = ({ transactions }: TransactionListProps) => {
   const transactionsMap = transactions.map((transaction) => (
-    <div key={transaction._id}>
-      <h1>{transaction.symbol}</h1>
-      <p>{transaction.type}</p>
-      <p>{transaction.shares}</p>
-      <p>$ {transaction.price}</p>
+    <div key={transaction._id} className="transactions-element">
+      <p>
+        {transaction.date.substr(0, 10)} |{' '}
+        {transaction.type === 'purchase' ? 'BUY' : 'SELL'} ({transaction.symbol}
+        ) - {transaction.shares} {transaction.shares > 1 ? 'shares' : 'share'} @
+        ${transaction.price}
+      </p>
     </div>
   ));
 
-  return <div>{transactionsMap}</div>;
+  return <div className="transactions-list">{transactionsMap}</div>;
 };

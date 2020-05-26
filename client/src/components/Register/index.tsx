@@ -8,7 +8,7 @@ export const Register = () => {
 
   return (
     <div className="card-container form-container">
-      <h1>Create An Account</h1>
+      <h1 className="card-title">Create An Account</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-element">
           <label>Name</label>

@@ -54,7 +54,10 @@ export const PortfolioList = ({
                 <FiBarChart2 />
               )}{' '}
               {symbol}
-              <span> - {shares} shares</span>
+              <span>
+                {' '}
+                - {shares} {shares > 1 ? 'shares' : 'share'}
+              </span>
             </p>
             <p>${latestPrice.toFixed(2)}/share</p>
           </div>
