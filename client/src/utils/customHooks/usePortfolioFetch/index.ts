@@ -50,6 +50,6 @@ export const usePortfolioFetch = (
       setResponse(cleanedStockResults);
     };
     fetchData();
-  }, [userID]);
+  }, [userID, setCurrentBalance]);
   return response;
 };

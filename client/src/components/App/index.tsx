@@ -20,31 +20,33 @@ export const App = () => {
         setCurrentUser={setCurrentUser}
         setIsAuthenticated={setIsAuthenticated}
       />
-      <Switch>
-        <Route exact path="/login">
-          <Login />
-        </Route>
-        <Route exact path="/register">
-          <Register />
-        </Route>
-        <Route exact path="/portfolio">
-          {isAuthenticated ? (
-            <Portfolio currentUser={currentUser} />
-          ) : (
+      <div className="app-body">
+        <Switch>
+          <Route exact path="/login">
             <Login />
-          )}
-        </Route>
-        <Route exact path="/transactions">
-          {isAuthenticated ? (
-            <Transactions currentUser={currentUser} />
-          ) : (
-            <Login />
-          )}
-        </Route>
-        <Route>
-          <Home isAuthenticated={isAuthenticated} />
-        </Route>
-      </Switch>
+          </Route>
+          <Route exact path="/register">
+            <Register />
+          </Route>
+          <Route exact path="/portfolio">
+            {isAuthenticated ? (
+              <Portfolio currentUser={currentUser} />
+            ) : (
+              <Login />
+            )}
+          </Route>
+          <Route exact path="/transactions">
+            {isAuthenticated ? (
+              <Transactions currentUser={currentUser} />
+            ) : (
+              <Login />
+            )}
+          </Route>
+          <Route>
+            <Home isAuthenticated={isAuthenticated} />
+          </Route>
+        </Switch>
+      </div>
     </>
   );
 };

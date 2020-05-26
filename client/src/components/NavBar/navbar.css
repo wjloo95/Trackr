@@ -1,0 +1,60 @@
+.nav {
+  background-color: var(--primary-color);
+  overflow: hidden;
+  margin-bottom: 2em;
+  box-shadow: 0 2px 8px var(--primary-color);
+}
+
+.nav-link,
+.home-link {
+  float: left;
+  display: block;
+  text-align: center;
+  padding: 0.8em 1.5em;
+  text-decoration: none;
+  font-size: 1.5em;
+  color: var(--light-font-color);
+  transition: all 0.25s ease-in;
+}
+
+.home-link {
+  font-weight: bold;
+}
+.active-link {
+  background-color: var(--dark-font-color);
+  font-weight: bold;
+}
+
+.nav-link:hover {
+  background-color: var(--dark-font-color);
+  font-weight: bold;
+}
+
+.nav-button {
+  float: right;
+  cursor: pointer;
+  background-color: var(--dark-secondary-color);
+}
+
+@media screen and (max-width: 680px) {
+  .nav-link,
+  .home-link {
+    font-size: 1.2em;
+    padding: 0.6em 1.3em;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .nav-link,
+  .home-link {
+    font-size: 1em;
+    padding: 0.5em 1.2em;
+  }
+}
+@media screen and (max-width: 430px) {
+  .nav-link,
+  .home-link {
+    font-size: 0.8em;
+    padding: 0.5em 1em;
+  }
+}

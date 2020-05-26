@@ -1,7 +1,9 @@
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, NavLink, useHistory } from 'react-router-dom';
 import { logout } from '../../utils/helpers/auth';
 import { UserType } from '../../utils/types';
+
+import './navbar.css';
 
 type NavProps = {
   isAuthenticated: boolean;
@@ -23,19 +25,34 @@ export const NavBar = ({
   };
   const loggedInNav = (
     <>
-      <Link to="/portfolio">Portfolio</Link>
-      <Link to="/transactions">Transactions</Link>
-      <button onClick={handleLogout}>Log Out</button>
+      <NavLink
+        to="/portfolio"
+        className="nav-link"
+        activeClassName="active-link"
+      >
+        Portfolio
+      </NavLink>
+      <NavLink
+        to="/transactions"
+        className="nav-link"
+        activeClassName="active-link"
+      >
+        Transactions
+      </NavLink>
+      <div onClick={handleLogout} className="nav-link nav-button">
+        Log Out
+      </div>
     </>
   );
 
-  const loggedOutNav = (
-    <button>
-      <Link to="/login">Log In</Link>
-    </button>
+  const navComponent = isAuthenticated ? loggedInNav : null;
+
+  return (
+    <div className="nav">
+      <Link to="/home" className="home-link">
+        Stonks
+      </Link>
+      {navComponent}
+    </div>
   );
-
-  const navComponent = isAuthenticated ? loggedInNav : loggedOutNav;
-
-  return <div>{navComponent}</div>;
 };
