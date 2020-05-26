@@ -3,6 +3,7 @@ import { useState, ChangeEvent, FormEvent } from 'react';
 import { RegisterFormType } from '../../types';
 import { register, login } from '../../helpers/auth';
 import { useHistory } from 'react-router-dom';
+import { displayError, displaySuccess } from '../../helpers/alert';
 
 export const useRegisterForm = () => {
   const history = useHistory();
@@ -14,25 +15,28 @@ export const useRegisterForm = () => {
   });
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+    try {
+      event.preventDefault();
 
-    // Create a new account for the user
-    const registeredUser = await register(formInputs);
+      // Create a new account for the user
+      const registeredUser = await register(formInputs);
 
-    if (registeredUser.status === 400) {
-      throw new Error('Email in Use');
-    }
+      // Once created, sign that user in
+      const loggedInUser = await login({
+        email: formInputs.email,
+        password: formInputs.password,
+      });
 
-    // Once created, sign that user in
-    const loggedInUser = await login({
-      email: formInputs.email,
-      password: formInputs.password,
-    });
-
-    if (loggedInUser) {
-      history.push('/');
-    } else {
-      throw new Error('Trouble creating an account. Please try again later!');
+      if (loggedInUser) {
+        displaySuccess(`Account Successfully Created!`);
+        history.push('/');
+      } else {
+        throw new Error('Error creating user');
+      }
+    } catch (error) {
+      displayError(
+        'There was an error creating this account. Please try again later.'
+      );
     }
   };
 

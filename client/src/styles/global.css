@@ -149,3 +149,35 @@ input:focus {
 .card-title {
   margin-bottom: 1em;
 }
+
+/* Override react-toastify styles */
+.Toastify__toast-container {
+  width: 40%;
+  text-align: center;
+}
+
+@media screen and (max-width: 1000px) {
+  .Toastify__toast-container {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .Toastify__toast-container {
+    width: 80%;
+  }
+}
+
+.Toastify__toast {
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: bold;
+  font-size: 1.5em;
+  color: var(--light-font-color);
+}
+
+.Toastify__toast--success {
+  background-color: var(--dark-font-color);
+}
+.Toastify__toast--error {
+  background-color: var(--dark-secondary-color);
+}

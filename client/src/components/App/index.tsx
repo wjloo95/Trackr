@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
 import {
   NavBar,
@@ -29,6 +30,7 @@ export const App = () => {
         setCurrentUser={setCurrentUser}
         setIsAuthenticated={setIsAuthenticated}
       />
+      <ToastContainer autoClose={3000} position="top-center" />
       <div className="app-body">
         <Switch>
           <PublicRoute

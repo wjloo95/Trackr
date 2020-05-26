@@ -4,6 +4,7 @@ import jwtDecode from 'jwt-decode';
 import { UserType, TokenType } from '../../types';
 import { logout, setAuthorizationToken } from '../../helpers/auth';
 import { useLocation } from 'react-router-dom';
+import { displayError } from '../../helpers/alert';
 
 export const useTokenCheck = () => {
   const [currentUser, setCurrentUser] = useState<UserType | null>(null);
@@ -11,20 +12,26 @@ export const useTokenCheck = () => {
   const location = useLocation();
   useEffect(() => {
     if (localStorage.jwtToken) {
-      const currentTime = new Date().getTime() / 1000;
-      const token: TokenType = jwtDecode(localStorage.jwtToken);
+      try {
+        const currentTime = new Date().getTime() / 1000;
+        const token: TokenType = jwtDecode(localStorage.jwtToken);
 
-      const user = { id: token.id, name: token.name };
+        const user = { id: token.id, name: token.name };
 
-      // Check if token has expired
-      if (currentTime > token.exp) {
-        // If so, remove from local storage
-        setCurrentUser(logout());
-        setIsAuthenticated(false);
-      } else {
-        setAuthorizationToken(localStorage.jwtToken);
-        setCurrentUser(user);
-        setIsAuthenticated(true);
+        // Check if token has expired
+        if (currentTime > token.exp) {
+          // If so, remove from local storage
+          setCurrentUser(logout());
+          setIsAuthenticated(false);
+        } else {
+          setAuthorizationToken(localStorage.jwtToken);
+          setCurrentUser(user);
+          setIsAuthenticated(true);
+        }
+      } catch (error) {
+        displayError(
+          'There was an error logging you in. Please try again later.'
+        );
       }
     }
   }, [location]);

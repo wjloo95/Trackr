@@ -12,8 +12,8 @@ export const useCheckSymbol = () => {
   });
 
   const handleSymbolSubmit = async (event: any) => {
-    event.preventDefault();
     try {
+      event.preventDefault();
       const stockResults = await fetch(
         `https://sandbox.iexapis.com/stable/stock/${symbolFormInputs.symbol}/quote?token=Tsk_943ee8f6637548f3828fcaef19d09bfd`
       ).then((res) => res.json());

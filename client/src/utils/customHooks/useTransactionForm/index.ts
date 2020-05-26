@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
+
+import { displayError, displaySuccess } from '../../helpers/alert';
 import { TransactionFormType, StockPriceType } from '../../types';
 
 export const useTransactionForm = (
@@ -14,30 +16,53 @@ export const useTransactionForm = (
   });
 
   const handleSubmit = async (event: any) => {
-    event.preventDefault();
+    try {
+      event.preventDefault();
 
-    if (!Number.isInteger(Number(formInputs.shares))) {
-      throw new Error('You may only purchase whole shares');
+      if (!Number.isInteger(Number(formInputs.shares))) {
+        throw new Error('You may only purchase whole shares');
+      }
+      setrequestMade(true);
+
+      const currentDate = new Date();
+
+      axios
+        .post(
+          `${process.env.REACT_APP_PUBLIC_URL}/${formInputs.type}/${userID}`,
+          {
+            date: currentDate,
+            type: formInputs.type,
+            symbol: priceData.symbol.toUpperCase(),
+            shares: formInputs.shares,
+            price: priceData.price,
+          }
+        )
+        .then((res) => {
+          setCurrentBalance(res.data.cash);
+          setrequestMade(false);
+
+          const { shares, type } = formInputs;
+          const { symbol, price } = priceData;
+          const transaction = type === 'purchase' ? 'Purchase' : 'Sale';
+
+          displaySuccess(
+            `${transaction} Complete: ${shares} ${
+              shares > 1 ? 'shares' : 'share'
+            } of ${symbol.toUpperCase()} @ ${price}/share`
+          );
+        });
+    } catch (error) {
+      if (
+        error.message ===
+        'You may only purchase whole shares. Please try again.'
+      ) {
+        displayError(error.message);
+      } else {
+        displayError(
+          'There was an error with your transaction. Please try again later.'
+        );
+      }
     }
-    setrequestMade(true);
-
-    const currentDate = new Date();
-
-    axios
-      .post(
-        `${process.env.REACT_APP_PUBLIC_URL}/${formInputs.type}/${userID}`,
-        {
-          date: currentDate,
-          type: formInputs.type,
-          symbol: priceData.symbol.toUpperCase(),
-          shares: formInputs.shares,
-          price: priceData.price,
-        }
-      )
-      .then((res) => {
-        setCurrentBalance(res.data.cash);
-        setrequestMade(false);
-      });
   };
 
   const handleInputChange = (event: any) => {
@@ -54,7 +79,6 @@ export const useTransactionForm = (
   return {
     handleSubmit,
     handleInputChange,
-
     formInputs,
   };
 };
