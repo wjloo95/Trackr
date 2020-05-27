@@ -42,10 +42,12 @@ module.exports = {
   buyStock: async (purchaseDetails, userID) => {
     const { shares, price } = purchaseDetails;
 
+    // Check if they have enough funds to make this purchase
     const currentCashAvailable = await User.findById(userID, {
       _id: 0,
       cash: 1,
     }).exec();
+
     if (currentCashAvailable.cash < price * shares) {
       throw new Error('Insufficient funds');
     }
@@ -62,6 +64,7 @@ module.exports = {
     ).exec();
   },
   addPurchasedStockToPortfolio: async ({ symbol, shares }, userID) => {
+    // Increment share count by requisite amount, or create entry if it was not owned prior
     return await User.findByIdAndUpdate(
       userID,
       {
@@ -113,6 +116,7 @@ module.exports = {
       ).exec();
     }
 
+    // Decrement share count by requisite amount
     return await User.findByIdAndUpdate(
       userID,
       {
@@ -124,7 +128,9 @@ module.exports = {
     ).exec();
   },
   register: async ({ name, email, password }) => {
+    // Ensure all emails are stored lowercased
     email = email.toLowerCase();
+
     const isExistingUser = await User.findOne({ email }).exec();
 
     if (isExistingUser) {
@@ -142,7 +148,9 @@ module.exports = {
     });
   },
   login: async ({ email, password }) => {
+    // Ensure all emails are entered lowercased
     email = email.toLowerCase();
+
     const currentUser = await User.findOne({ email }).exec();
 
     if (!currentUser) {

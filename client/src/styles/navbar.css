@@ -1,12 +1,12 @@
 .nav {
   background-color: var(--primary-color);
   overflow: hidden;
-  margin-bottom: 2em;
   box-shadow: 0 2px 8px var(--primary-color);
 }
 
 .nav-link,
-.home-link {
+.home-link,
+.nav-name {
   float: left;
   display: block;
   text-align: center;
@@ -15,6 +15,11 @@
   font-size: 1.5em;
   color: var(--light-font-color);
   transition: all 0.25s ease-in;
+}
+
+.nav-name {
+  float: right;
+  background-color: var(--light-secondary-color);
 }
 
 .home-link {

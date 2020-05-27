@@ -19,7 +19,11 @@ export const useRegisterForm = () => {
       event.preventDefault();
 
       // Create a new account for the user
-      await register(formInputs);
+      const registeredUser = await register(formInputs);
+
+      if (registeredUser === 'invalid') {
+        throw new Error('invalid');
+      }
 
       // Once created, sign that user in
       const loggedInUser = await login({
@@ -34,9 +38,15 @@ export const useRegisterForm = () => {
         throw new Error('Error creating user');
       }
     } catch (error) {
-      displayError(
-        'There was an error creating this account. Please try again later.'
-      );
+      if (error.message === 'invalid') {
+        displayError(
+          'This email is in use. Please try another email or login.'
+        );
+      } else {
+        displayError(
+          'There was an error creating this account. Please try again later.'
+        );
+      }
     }
   };
 

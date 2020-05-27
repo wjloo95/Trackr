@@ -7,7 +7,7 @@ import { fetchBatchIEX } from '../../helpers/api';
 const constructIEXQuery = async (userID: string | null) => {
   // Retrieve this user's portfolio
   const currentPortfolio = await axios.get(
-    `${process.env.REACT_APP_PUBLIC_URL}/portfolio/${userID}`
+    `${process.env.REACT_APP_SERVER_URL}/portfolio/${userID}`
   );
   // Construct string from symbols to query IEX API
   const symbolsArr = Object.keys(currentPortfolio.data.portfolio);
@@ -60,19 +60,23 @@ export const usePortfolioFetch = (
       try {
         // Retrieve this user's cash balance
         const currentCash = await axios.get(
-          `${process.env.REACT_APP_PUBLIC_URL}/balance/${userID}`
+          `${process.env.REACT_APP_SERVER_URL}/balance/${userID}`
         );
 
         setCurrentBalance(currentCash.data.cash);
 
+        // Retrieve current portfolio to create string for IEX Query
         const { currentPortfolio, symbolString } = await constructIEXQuery(
           userID
         );
 
+        // If user has no stocks, return empty array
         if (!symbolString) {
+          setResponse([]);
           return;
         }
 
+        // Use constructed IEX Query to get data for all stocks, and return requisite information
         const {
           totalPortfolioValue,
           cleanedStockResults,

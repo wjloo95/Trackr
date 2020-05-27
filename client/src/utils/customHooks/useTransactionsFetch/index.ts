@@ -11,7 +11,7 @@ export const useTransactionsFetch = (userID: string | undefined) => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get(
-        `${process.env.REACT_APP_PUBLIC_URL}/transactions/${userID}`
+        `${process.env.REACT_APP_SERVER_URL}/transactions/${userID}`
       );
       setResponse(response.data);
     };

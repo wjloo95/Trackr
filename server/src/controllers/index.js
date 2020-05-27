@@ -93,14 +93,15 @@ module.exports = {
       const userID = req.params.userID;
       const saleDetails = req.body;
 
-      // First check if the user owns this stock, and enough shares to make a sale
       const stockInformation = {
         symbol: saleDetails.symbol,
         shares: saleDetails.shares,
       };
+
+      // First check if the user owns this stock, and has enough shares to make a sale
       await model.removeSoldStockFromPortfolio(stockInformation, userID);
 
-      // Then, if it was viable, add the transaction
+      // Then, if so, add the transaction
       const updatedUser = await model.sellStock(saleDetails, userID);
 
       res.status(200).send(updatedUser);

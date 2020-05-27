@@ -1,4 +1,4 @@
-# Trackr
+# [Trackr](https://stock-tracker-ttp.herokuapp.com)
 
 Keep track of your stock portfolio and audit your transactions.
 
@@ -18,7 +18,6 @@ Keep track of your stock portfolio and audit your transactions.
 - [React.js](http://reactjs.org)
 - [Typescript](https://www.typescriptlang.org)
 - [React Router](https://reacttraining.com/react-router/)
-- [Enzyme](https://enzymejs.github.io/enzyme/)
 - [React Icons](https://react-icons.github.io/react-icons/)
 
 > Authentication
@@ -73,15 +72,44 @@ Password: janepwd
 - [x] Display green when the current price is greater than the day's open price.
 
 ## Future Improvements
+
+### Developer Improvements
 - [ ] Addition of Redux to facilitate scalability of application
-- [ ] Expand React Unit Testing
+- [ ] Add React Unit Testing
 - [ ] E2E testing with Cypress
 - [ ] CI/CD pipeline using Travis CI
 
+### Product Features
+- [ ] Sorting/Filtering options on Portfolio and Transactions
+- [ ] Suggested Stocks to purchase, based on current trends
+- [ ] D3.js graphics to display your portfolio over time
+
 ## Get Started
 - [ ] Fork this repo and `git clone` your fork.
-- [ ] Install dependencies with `npm install`.
+- [ ] Install server and client dependencies with `npm install`.
 - [ ] Get [IEXToken(IEX)](https://iexcloud.io)
+- [ ] Create requisite .env files
+- [ ] In ./server run ```npm run start-dev```
+- [ ] In ./client run ```npm run start```
+
+### Example Environment Variables 
+
+ > server/.env
+ ```
+ DB_USER=Mongo Atlas User
+ DB_USER_PWD=Mongo Atlas Passowrd
+ DB_CLUSTER=Mongo Atlas Cluster ID
+ SECRET=Secret for JWT signing
+ ```
+ 
+ > client/.env
+ ```
+ REACT_APP_SERVER_URL=http://localhost:(your port or 3005)
+ REACT_APP_IEX_TOKEN=IEX Public Token
+ REACT_APP_IEX_TEXT=IEX Testing Token
+ ```
+ 
+ 
 
 ## Credits
 

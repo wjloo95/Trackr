@@ -77,7 +77,10 @@ input:focus {
   justify-content: center;
   align-items: center;
   padding: 0 6em;
+  margin-top: 2em;
 }
+
+/* Style cards (Home, Login, Register) */
 
 .card-container {
   display: flex;
@@ -95,6 +98,8 @@ input:focus {
 .card-container h1 {
   font-size: 3em;
 }
+
+/* Style card forms (Login, Register) */
 
 .form-container form {
   display: flex;
@@ -148,6 +153,14 @@ input:focus {
 
 .card-title {
   margin-bottom: 1em;
+}
+
+.empty-component-title {
+  text-align: center;
+  font-size: 1.5em;
+  margin-top: 2em;
+  font-weight: bold;
+  color: var(--primary-color);
 }
 
 /* Override react-toastify styles */

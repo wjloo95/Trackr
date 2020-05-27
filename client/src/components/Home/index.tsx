@@ -34,7 +34,7 @@ export const Home = ({ isAuthenticated }: HomeProps) => {
     : loggedOutComponent;
   return (
     <div className="card-container home-container">
-      <h1 className="card-title">Welcome to Stonks!</h1>
+      <h1 className="card-title">Welcome to Trackr!</h1>
       {componentToDisplay}
     </div>
   );

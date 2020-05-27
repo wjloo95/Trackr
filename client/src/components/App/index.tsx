@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
+import Skeleton from 'react-loading-skeleton';
 
 import {
   NavBar,
@@ -21,52 +22,58 @@ export const App = () => {
     setCurrentUser,
     isAuthenticated,
     setIsAuthenticated,
+    didRequest,
   } = useTokenCheck();
 
   return (
     <>
       <NavBar
         isAuthenticated={isAuthenticated}
+        currentUser={currentUser}
         setCurrentUser={setCurrentUser}
         setIsAuthenticated={setIsAuthenticated}
       />
       <ToastContainer autoClose={3000} position="top-center" />
-      <div className="app-body">
-        <Switch>
-          <PublicRoute
-            exact
-            path="/login"
-            component={Login}
-            isAuthenticated={isAuthenticated}
-          />
-          <PublicRoute
-            exact
-            path="/register"
-            component={Register}
-            isAuthenticated={isAuthenticated}
-          />
-          <PrivateRoute
-            exact
-            path="/portfolio"
-            component={Portfolio}
-            isAuthenticated={isAuthenticated}
-            currentUser={currentUser}
-          />
-          <PrivateRoute
-            exact
-            path="/transactions"
-            component={Transactions}
-            isAuthenticated={isAuthenticated}
-            currentUser={currentUser}
-          />
-          <Route path="/">
-            <Home isAuthenticated={isAuthenticated} />
-          </Route>
-          <Route path="*">
-            <Redirect to="/" />
-          </Route>
-        </Switch>
-      </div>
+      {!didRequest ? (
+        <Skeleton width="100%" height="100vh" />
+      ) : (
+        <div className="app-body">
+          <Switch>
+            <PublicRoute
+              exact
+              path="/login"
+              component={Login}
+              isAuthenticated={isAuthenticated}
+            />
+            <PublicRoute
+              exact
+              path="/register"
+              component={Register}
+              isAuthenticated={isAuthenticated}
+            />
+            <PrivateRoute
+              exact
+              path="/portfolio"
+              component={Portfolio}
+              isAuthenticated={isAuthenticated}
+              currentUser={currentUser}
+            />
+            <PrivateRoute
+              exact
+              path="/transactions"
+              component={Transactions}
+              isAuthenticated={isAuthenticated}
+              currentUser={currentUser}
+            />
+            <Route path="/">
+              <Home isAuthenticated={isAuthenticated} />
+            </Route>
+            <Route path="*">
+              <Redirect to="/" />
+            </Route>
+          </Switch>
+        </div>
+      )}
     </>
   );
 };

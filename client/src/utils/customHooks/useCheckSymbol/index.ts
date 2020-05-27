@@ -16,6 +16,7 @@ export const useCheckSymbol = () => {
     try {
       event.preventDefault();
 
+      // Get pricing data for the chosen stock
       const stockResults = await fetchSingleIEX(symbolFormInputs.symbol);
 
       const { companyName, latestPrice } = stockResults;
@@ -26,6 +27,7 @@ export const useCheckSymbol = () => {
         price: latestPrice,
       });
     } catch (error) {
+      // If ticker was invalid, send along incorrect ticker notification
       setpriceData((prev) => ({ ...prev, name: 'invalid' }));
     }
   };

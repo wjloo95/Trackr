@@ -26,31 +26,31 @@ export const useTransactionForm = (
 
       const currentDate = new Date();
 
-      axios
-        .post(
-          `${process.env.REACT_APP_PUBLIC_URL}/${formInputs.type}/${userID}`,
-          {
-            date: currentDate,
-            type: formInputs.type,
-            symbol: priceData.symbol.toUpperCase(),
-            shares: formInputs.shares,
-            price: priceData.price,
-          }
-        )
-        .then((res) => {
-          setCurrentBalance(res.data.cash);
-          setrequestMade(false);
+      const updatedTransaction = await axios.post(
+        `${process.env.REACT_APP_SERVER_URL}/${formInputs.type}/${userID}`,
+        {
+          date: currentDate,
+          type: formInputs.type,
+          symbol: priceData.symbol.toUpperCase(),
+          shares: formInputs.shares,
+          price: priceData.price,
+        }
+      );
 
-          const { shares, type } = formInputs;
-          const { symbol, price } = priceData;
-          const transaction = type === 'purchase' ? 'Purchase' : 'Sale';
+      setCurrentBalance(updatedTransaction.data.cash);
 
-          displaySuccess(
-            `${transaction} Complete: ${shares} ${
-              shares > 1 ? 'shares' : 'share'
-            } of ${symbol.toUpperCase()} @ ${price}/share`
-          );
-        });
+      setrequestMade(false);
+
+      // Display success toast
+      const { shares, type } = formInputs;
+      const { symbol, price } = priceData;
+      const transaction = type === 'purchase' ? 'Purchase' : 'Sale';
+
+      displaySuccess(
+        `${transaction} Complete: ${shares} ${
+          shares > 1 ? 'shares' : 'share'
+        } of ${symbol.toUpperCase()} @ ${price}/share`
+      );
     } catch (error) {
       if (
         error.message ===

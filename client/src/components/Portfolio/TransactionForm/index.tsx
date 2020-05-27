@@ -55,7 +55,7 @@ export const TransactionForm = ({
           ) : (
             <>
               <div className="symbol-information valid">
-                {priceData.name} | ${priceData.price}
+                {priceData.name} | ${priceData.price.toFixed(2)}
               </div>
               <h2>Select a transaction type and number of shares</h2>
               <form onSubmit={handleSubmit}>

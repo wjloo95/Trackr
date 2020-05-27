@@ -12,7 +12,7 @@ type TransactionProps = {
 export const Transactions = ({ currentUser }: TransactionProps) => {
   const response = useTransactionsFetch(currentUser?.id);
 
-  const transactions = response ? response.transactions : [];
+  const transactions = response ? response.transactions : null;
 
   return (
     <div className="transactions-container">

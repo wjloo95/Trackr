@@ -7,12 +7,14 @@ import '../../styles/navbar.css';
 
 type NavProps = {
   isAuthenticated: boolean;
+  currentUser: UserType | null;
   setCurrentUser: (input: UserType | null) => void;
   setIsAuthenticated: (input: boolean) => void;
 };
 
 export const NavBar = ({
   isAuthenticated,
+  currentUser,
   setCurrentUser,
   setIsAuthenticated,
 }: NavProps) => {
@@ -42,6 +44,7 @@ export const NavBar = ({
       <div onClick={handleLogout} className="nav-link nav-button">
         Log Out
       </div>
+      <div className="nav-name">{currentUser ? currentUser.name : null}</div>
     </>
   );
 
@@ -50,7 +53,7 @@ export const NavBar = ({
   return (
     <div className="nav">
       <Link to="/home" className="home-link">
-        Stonks
+        Trackr
       </Link>
       {navComponent}
     </div>

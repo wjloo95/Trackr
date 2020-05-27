@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+
+import Skeleton from 'react-loading-skeleton';
+
 import { UserType } from '../../utils/types';
 import { PortfolioList } from './PortfolioList';
 import { TransactionForm } from './TransactionForm';
@@ -14,7 +17,7 @@ export const Portfolio = ({ currentUser }: PortfolioProps) => {
   const [currentBalance, setCurrentBalance] = useState(0);
   const [portfolioValue, setPortfolioValue] = useState(0);
   return requestMade ? (
-    <div>PROCESSING YOUR PURCHASE</div>
+    <Skeleton width="100%" height="100%" />
   ) : (
     <div className="portfolio-container">
       <div className="page-title">Portfolio (${portfolioValue.toFixed(2)})</div>
