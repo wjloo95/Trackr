@@ -41,25 +41,36 @@
   background-color: var(--dark-secondary-color);
 }
 
-@media screen and (max-width: 680px) {
+@media screen and (max-width: 915px) {
   .nav-link,
-  .home-link {
+  .home-link,
+  .nav-name {
     font-size: 1.2em;
     padding: 0.6em 1.3em;
   }
 }
 
-@media screen and (max-width: 550px) {
+@media screen and (max-width: 700px) {
   .nav-link,
-  .home-link {
+  .home-link,
+  .nav-name {
     font-size: 1em;
     padding: 0.5em 1.2em;
   }
 }
-@media screen and (max-width: 430px) {
+@media screen and (max-width: 560px) {
   .nav-link,
-  .home-link {
+  .home-link,
+  .nav-name {
     font-size: 0.8em;
     padding: 0.5em 1em;
+  }
+}
+@media screen and (max-width: 430px) {
+  .nav-link,
+  .home-link,
+  .nav-name {
+    font-size: 0.6em;
+    padding: 0.3em 0.7em;
   }
 }

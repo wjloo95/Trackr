@@ -52,11 +52,14 @@ export const useTransactionForm = (
         } of ${symbol.toUpperCase()} @ ${price}/share`
       );
     } catch (error) {
-      if (
-        error.message ===
-        'You may only purchase whole shares. Please try again.'
-      ) {
-        displayError(error.message);
+      setrequestMade(false);
+
+      if (error.message === 'Request failed with status code 400') {
+        const errorMessage =
+          formInputs.type === 'purchase'
+            ? 'You do not have enough cash to make this purchase. Please try another transaction.'
+            : 'You do not have enough shares to make this sale. Please try another transaction.';
+        displayError(errorMessage);
       } else {
         displayError(
           'There was an error with your transaction. Please try again later.'

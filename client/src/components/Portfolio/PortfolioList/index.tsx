@@ -21,7 +21,7 @@ export const PortfolioList = ({
     setCurrentBalance,
     setPortfolioValue
   );
-  console.log(portfolio);
+
   const noStocksComponent =
     Array.isArray(portfolio) && portfolio.length === 0 ? (
       <div className="empty-component-title">
