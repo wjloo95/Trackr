@@ -10,10 +10,15 @@ export function setAuthorizationToken(token: string) {
   }
 }
 
-export function register(inputs: RegisterFormType) {
-  return axios
-    .post(`${process.env.REACT_APP_SERVER_URL}/auth/register`, inputs)
-    .catch((err) => 'invalid');
+export async function register(inputs: RegisterFormType) {
+  try {
+    return await axios.post(
+      `${process.env.REACT_APP_SERVER_URL}/auth/register`,
+      inputs
+    );
+  } catch (error) {
+    return 'invalid';
+  }
 }
 
 export function logout() {
@@ -22,15 +27,18 @@ export function logout() {
   return null;
 }
 
-export function login(data: LoginFormType) {
-  return axios
-    .post(`${process.env.REACT_APP_SERVER_URL}/auth/login`, data)
-    .then((res) => {
-      const token = res.data.token;
+export async function login(data: LoginFormType) {
+  try {
+    const loggedInToken = await axios.post(
+      `${process.env.REACT_APP_SERVER_URL}/auth/login`,
+      data
+    );
+    const token = loggedInToken.data.token;
 
-      localStorage.setItem('jwtToken', token);
-      setAuthorizationToken(token);
-      return jwtDecode(token);
-    })
-    .catch((err) => 'invalid');
+    localStorage.setItem('jwtToken', token);
+    setAuthorizationToken(token);
+    return jwtDecode(token);
+  } catch (error) {
+    return 'invalid';
+  }
 }
