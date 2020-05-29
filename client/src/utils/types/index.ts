@@ -3,6 +3,10 @@ export type UserType = {
   name: string;
 };
 
+export type StoreType = {
+  user: UserType;
+};
+
 export type LoginFormType = {
   email: string;
   password: string;

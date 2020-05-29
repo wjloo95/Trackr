@@ -1,28 +1,21 @@
 import React from 'react';
 import { Link, NavLink, useHistory } from 'react-router-dom';
 import { logout } from '../../utils/helpers/auth';
-import { UserType } from '../../utils/types';
 
 import '../../styles/navbar.css';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { addUser } from '../../actions';
+import { StoreType } from '../../utils/types';
 
-type NavProps = {
-  isAuthenticated: boolean;
-  currentUser: UserType | null;
-  setCurrentUser: (input: UserType | null) => void;
-  setIsAuthenticated: (input: boolean) => void;
-};
-
-export const NavBar = ({
-  isAuthenticated,
-  currentUser,
-  setCurrentUser,
-  setIsAuthenticated,
-}: NavProps) => {
+export const NavBar = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
+  const currentUser = useSelector(
+    (state: StoreType) => state.user,
+    shallowEqual
+  );
   const handleLogout = () => {
-    logout();
-    setCurrentUser(null);
-    setIsAuthenticated(false);
+    dispatch(addUser(logout()));
     history.push('/');
   };
   const loggedInNav = (
@@ -48,7 +41,7 @@ export const NavBar = ({
     </>
   );
 
-  const navComponent = isAuthenticated ? loggedInNav : null;
+  const navComponent = currentUser ? loggedInNav : null;
 
   return (
     <div className="nav">

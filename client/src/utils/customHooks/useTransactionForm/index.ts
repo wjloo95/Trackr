@@ -2,18 +2,19 @@ import { useState } from 'react';
 import axios from 'axios';
 
 import { displayError, displaySuccess } from '../../helpers/alert';
-import { TransactionFormType, StockPriceType } from '../../types';
+import { TransactionFormType, StockPriceType, StoreType } from '../../types';
+import { useSelector } from 'react-redux';
 
 export const useTransactionForm = (
   setrequestMade: (input: boolean) => void,
   setCurrentBalance: (input: number) => void,
-  userID: string | null,
   priceData: StockPriceType
 ) => {
   const [formInputs, setFormInputs] = useState<TransactionFormType>({
     type: 'purchase',
     shares: 1,
   });
+  const currentUser = useSelector((state: StoreType) => state.user);
 
   const handleSubmit = async (event: any) => {
     try {
@@ -22,12 +23,11 @@ export const useTransactionForm = (
       if (!Number.isInteger(Number(formInputs.shares))) {
         throw new Error('You may only purchase whole shares');
       }
-      setrequestMade(true);
 
       const currentDate = new Date();
 
       const updatedTransaction = await axios.post(
-        `${process.env.REACT_APP_SERVER_URL}/${formInputs.type}/${userID}`,
+        `${process.env.REACT_APP_SERVER_URL}/${formInputs.type}/${currentUser.id}`,
         {
           date: currentDate,
           type: formInputs.type,
@@ -36,6 +36,7 @@ export const useTransactionForm = (
           price: priceData.price,
         }
       );
+      setrequestMade(true);
 
       setCurrentBalance(updatedTransaction.data.cash);
 

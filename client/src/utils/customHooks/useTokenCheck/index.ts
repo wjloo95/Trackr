@@ -1,30 +1,16 @@
 import { useState, useEffect } from 'react';
 import jwtDecode from 'jwt-decode';
-
-import { UserType, TokenType } from '../../types';
-import { logout, setAuthorizationToken } from '../../helpers/auth';
 import { useLocation } from 'react-router-dom';
-import { displayError } from '../../helpers/alert';
+import { useDispatch } from 'react-redux';
 
-type UserDataType = {
-  currentUser: UserType | null;
-  isAuthenticated: boolean;
-  didRequest: boolean;
-};
+import { TokenType } from '../../types';
+import { logout, setAuthorizationToken } from '../../helpers/auth';
+import { displayError } from '../../helpers/alert';
+import { addUser } from '../../../actions';
 
 export const useTokenCheck = () => {
-  const [userData, setUserData] = useState<UserDataType>({
-    currentUser: null,
-    isAuthenticated: false,
-    didRequest: false,
-  });
-
-  const setCurrentUser = (user: UserType | null) => {
-    setUserData((prev) => ({ ...prev, currentUser: user }));
-  };
-  const setIsAuthenticated = (input: boolean) => {
-    setUserData((prev) => ({ ...prev, isAuthenticated: input }));
-  };
+  const dispatch = useDispatch();
+  const [didRequest, setDidRequest] = useState(false);
 
   const location = useLocation();
   useEffect(() => {
@@ -38,19 +24,13 @@ export const useTokenCheck = () => {
         // Check if token has expired
         if (currentTime > token.exp) {
           // If so, remove from local storage
-          setUserData({
-            currentUser: logout(),
-            isAuthenticated: false,
-            didRequest: true,
-          });
+          dispatch(addUser(logout()));
+          setDidRequest(true);
         } else {
           // If not, update current user to stored user
+          dispatch(addUser(user));
           setAuthorizationToken(localStorage.jwtToken);
-          setUserData({
-            currentUser: user,
-            isAuthenticated: true,
-            didRequest: true,
-          });
+          setDidRequest(true);
         }
       } catch (error) {
         displayError(
@@ -58,26 +38,13 @@ export const useTokenCheck = () => {
         );
 
         // Notify App that an attempt to log in was made and there is no user in storage. Render logged out application.
-        setUserData((prev) => ({
-          ...prev,
-          didRequest: true,
-        }));
+        setDidRequest(true);
       }
     } else {
       // Notify App that an attempt to log in was made and there is no user in storage. Render logged out application.
-      setUserData((prev) => ({
-        ...prev,
-        didRequest: true,
-      }));
+      setDidRequest(true);
     }
-  }, [location]);
+  }, [dispatch, location]);
 
-  const { currentUser, isAuthenticated, didRequest } = userData;
-  return {
-    currentUser,
-    setCurrentUser,
-    isAuthenticated,
-    setIsAuthenticated,
-    didRequest,
-  };
+  return didRequest;
 };

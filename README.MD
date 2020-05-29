@@ -16,6 +16,8 @@ Keep track of your stock portfolio and audit your transactions.
 > Front-End
 
 - [React.js](http://reactjs.org)
+- [Redux](https://redux.js.org)
+  - *Implemented post-deadline*
 - [Typescript](https://www.typescriptlang.org)
 - [React Router](https://reacttraining.com/react-router/)
 - [React Icons](https://react-icons.github.io/react-icons/)
@@ -74,7 +76,7 @@ Password: janepwd
 ## Future Improvements
 
 ### Developer Improvements
-- [ ] Addition of Redux to facilitate scalability of application
+- [x] Addition of Redux to facilitate scalability of application
 - [ ] Add React Unit Testing
 - [ ] E2E testing with Cypress
 - [ ] CI/CD pipeline using Travis CI

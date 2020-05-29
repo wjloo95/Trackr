@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { PortfolioEntryType } from '../../types';
+import { PortfolioEntryType, StoreType } from '../../types';
 import { displayError } from '../../helpers/alert';
 import { fetchBatchIEX } from '../../helpers/api';
+import { useSelector, shallowEqual } from 'react-redux';
 
 const constructIEXQuery = async (userID: string | null) => {
   // Retrieve this user's portfolio
@@ -49,25 +50,28 @@ const constructResults = async (
 };
 
 export const usePortfolioFetch = (
-  userID: string | null,
   setCurrentBalance: (input: number) => void,
   setPortfolioValue: (input: number) => void
 ) => {
   const [response, setResponse] = useState<PortfolioEntryType[] | null>(null);
+  const currentUser = useSelector(
+    (state: StoreType) => state.user,
+    shallowEqual
+  );
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         // Retrieve this user's cash balance
         const currentCash = await axios.get(
-          `${process.env.REACT_APP_SERVER_URL}/balance/${userID}`
+          `${process.env.REACT_APP_SERVER_URL}/balance/${currentUser.id}`
         );
 
         setCurrentBalance(currentCash.data.cash);
 
         // Retrieve current portfolio to create string for IEX Query
         const { currentPortfolio, symbolString } = await constructIEXQuery(
-          userID
+          currentUser.id
         );
 
         // If user has no stocks, return empty array
@@ -92,6 +96,6 @@ export const usePortfolioFetch = (
       }
     };
     fetchData();
-  }, [userID, setCurrentBalance, setPortfolioValue]);
+  }, [currentUser, setCurrentBalance, setPortfolioValue]);
   return response;
 };

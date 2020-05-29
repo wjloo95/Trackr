@@ -1,13 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector, shallowEqual } from 'react-redux';
 
 import '../../styles/home.css';
+import { StoreType } from '../../utils/types';
 
-type HomeProps = {
-  isAuthenticated: boolean;
-};
-
-export const Home = ({ isAuthenticated }: HomeProps) => {
+export const Home = () => {
+  const currentUser = useSelector(
+    (state: StoreType) => state.user,
+    shallowEqual
+  );
   const loggedOutComponent = (
     <div className="home-content">
       <h3>Please log in to start tracking your stocks!</h3>
@@ -29,7 +31,7 @@ export const Home = ({ isAuthenticated }: HomeProps) => {
       </div>
     </div>
   );
-  const componentToDisplay = isAuthenticated
+  const componentToDisplay = currentUser
     ? loggedInComponent
     : loggedOutComponent;
   return (

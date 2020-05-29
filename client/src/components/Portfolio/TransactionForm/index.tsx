@@ -4,14 +4,12 @@ import { useCheckSymbol } from '../../../utils/customHooks/useCheckSymbol';
 
 type TransactionFormProps = {
   setRequestMade: (input: boolean) => void;
-  userID: string | null;
   currentBalance: number;
   setCurrentBalance: (input: number) => void;
 };
 
 export const TransactionForm = ({
   setRequestMade,
-  userID,
   currentBalance,
   setCurrentBalance,
 }: TransactionFormProps) => {
@@ -26,7 +24,7 @@ export const TransactionForm = ({
 
     handleSubmit,
     handleInputChange,
-  } = useTransactionForm(setRequestMade, setCurrentBalance, userID, priceData);
+  } = useTransactionForm(setRequestMade, setCurrentBalance, priceData);
   return (
     <div className="transaction-form-outer-container">
       <h1>Cash - ${currentBalance.toFixed(2)}</h1>

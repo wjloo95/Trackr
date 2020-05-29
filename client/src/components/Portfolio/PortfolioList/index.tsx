@@ -6,21 +6,15 @@ import { usePortfolioFetch } from '../../../utils/customHooks/usePortfolioFetch'
 import { PortfolioEntryType } from '../../../utils/types';
 
 type PortfolioListProps = {
-  userID: string | null;
   setCurrentBalance: (input: number) => void;
   setPortfolioValue: (input: number) => void;
 };
 
 export const PortfolioList = ({
-  userID,
   setCurrentBalance,
   setPortfolioValue,
 }: PortfolioListProps) => {
-  const portfolio = usePortfolioFetch(
-    userID,
-    setCurrentBalance,
-    setPortfolioValue
-  );
+  const portfolio = usePortfolioFetch(setCurrentBalance, setPortfolioValue);
 
   const noStocksComponent =
     Array.isArray(portfolio) && portfolio.length === 0 ? (
